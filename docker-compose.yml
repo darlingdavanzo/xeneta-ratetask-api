@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:ratestask@ratestask:5432/postgres
+    networks:
+      - my_network
+  
+  test:
+    build: .
+    command: ["pytest", "tests/"]
+    environment:
+      - DATABASE_URL=postgresql://postgres:ratestask@ratestask:5432/postgres
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    external: true
